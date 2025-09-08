@@ -1,0 +1,355 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.game-container {
+    display: flex;
+    gap: 20px;
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    max-width: 1200px;
+    width: 100%;
+}
+
+.ui-panel {
+    width: 300px;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.ui-panel h1 {
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 2em;
+}
+
+.level-info h2 {
+    color: #34495e;
+    margin-bottom: 5px;
+}
+
+.level-info p {
+    color: #7f8c8d;
+    font-size: 0.9em;
+}
+
+.liquid-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.liquid-type {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    border: 2px solid #ecf0f1;
+}
+
+.liquid-type h3 {
+    color: #2c3e50;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+}
+
+.liquid-count {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.liquid-count span {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #34495e;
+}
+
+.liquid-btn {
+    background: #3498db;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.liquid-btn:hover {
+    background: #2980b9;
+    transform: translateY(-2px);
+}
+
+.liquid-btn.selected {
+    background: #e74c3c;
+    box-shadow: 0 0 10px rgba(231, 76, 60, 0.5);
+}
+
+.game-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.submit-btn, .reset-btn, .next-level-btn {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1em;
+    transition: all 0.3s ease;
+}
+
+.submit-btn {
+    background: #27ae60;
+    color: white;
+}
+
+.submit-btn:hover {
+    background: #229954;
+    transform: translateY(-2px);
+}
+
+.reset-btn {
+    background: #95a5a6;
+    color: white;
+}
+
+.reset-btn:hover {
+    background: #7f8c8d;
+    transform: translateY(-2px);
+}
+
+.next-level-btn {
+    background: #f39c12;
+    color: white;
+}
+
+.next-level-btn:hover {
+    background: #e67e22;
+    transform: translateY(-2px);
+}
+
+.legend {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    border: 2px solid #ecf0f1;
+}
+
+.legend h3 {
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.legend-color {
+    width: 20px;
+    height: 20px;
+    border-radius: 3px;
+    border: 1px solid #bdc3c7;
+}
+
+.game-area {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.grid-container {
+    background: #ecf0f1;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.game-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: repeat(12, 1fr);
+    gap: 1px;
+    background: #bdc3c7;
+    border: 2px solid #34495e;
+    width: 480px;
+    height: 480px;
+}
+
+.grid-cell {
+    background: #ecf0f1;
+    border: 1px solid #bdc3c7;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.grid-cell:hover {
+    transform: scale(1.05);
+    z-index: 10;
+}
+
+/* Surface types */
+.grid-cell.grass {
+    background: #27ae60;
+}
+
+.grid-cell.fire {
+    background: #e74c3c;
+}
+
+.grid-cell.gray {
+    background: #7f8c8d;
+}
+
+.grid-cell.teleporter {
+    background: #9b59b6;
+    position: relative;
+}
+
+.grid-cell.teleporter::after {
+    content: 'T';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-weight: bold;
+    font-size: 0.8em;
+}
+
+/* Liquid types */
+.grid-cell.water {
+    background: #3498db;
+}
+
+.grid-cell.magma {
+    background: #e67e22;
+}
+
+/* Placement row - ALWAYS neon yellow for empty cells */
+.grid-cell.placement-row {
+    background: #ffff00 !important;
+    border: 2px solid #ffeb3b;
+    box-shadow: 0 0 10px rgba(255, 255, 0, 0.5);
+}
+
+.grid-cell.placement-row:hover {
+    background: #ffeb3b !important;
+    box-shadow: 0 0 15px rgba(255, 255, 0, 0.8);
+}
+
+/* Only individual cells change color when liquids are placed */
+.grid-cell.placement-row.water {
+    background: #3498db !important;
+    border: 2px solid #2980b9 !important;
+}
+
+.grid-cell.placement-row.magma {
+    background: #e67e22 !important;
+    border: 2px solid #d35400 !important;
+}
+
+/* Remove selection effects that interfere */
+.grid-cell.placement-row.water-selected,
+.grid-cell.placement-row.magma-selected {
+    background: #ffff00 !important;
+    opacity: 0.7;
+}
+
+/* Floor */
+.grid-cell.floor {
+    background: #34495e;
+    border: 2px solid #2c3e50;
+}
+
+/* Success states */
+.grid-cell.grass.success {
+    background: #2ecc71;
+    box-shadow: 0 0 10px rgba(46, 204, 113, 0.5);
+}
+
+.grid-cell.fire.success {
+    background: #c0392b;
+    box-shadow: 0 0 10px rgba(192, 57, 43, 0.5);
+}
+
+.grid-cell.gray.success {
+    background: #95a5a6;
+    box-shadow: 0 0 10px rgba(149, 165, 166, 0.5);
+}
+
+/* Level completion overlay */
+.level-complete {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.level-complete-content {
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.level-complete h2 {
+    color: #27ae60;
+    font-size: 2.5em;
+    margin-bottom: 20px;
+}
+
+.level-complete p {
+    color: #7f8c8d;
+    font-size: 1.2em;
+    margin-bottom: 30px;
+}
+
+.level-complete button {
+    background: #27ae60;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.level-complete button:hover {
+    background: #229954;
+    transform: translateY(-2px);
+}
